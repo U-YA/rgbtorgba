@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<html dir="ltr" lang="ja">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<meta name="description" content="RGB から RGBA　に変換するツール">
+<meta name="keywords" content="RGB, RGBA,変換,コンバーター,ツール">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cityJumperWEB.com | RGB to RGBA ツール</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+function check(txt){
+    var str = txt.value;
+    if(str.match(/[^0-9]+/)){
+        alert("数字半角のみ入力可。");
+        txt.value = str.replace(/[^0-9]+/g,"");
+    }
+};
+
+function RGBtoRGBA(){
+    r = parseFloat(document.Cvt.R.value);
+    g = parseFloat(document.Cvt.G.value);
+    b = parseFloat(document.Cvt.B.value);
+    var original = 'rgb('+r+','+g+','+b+')';
+    if(r<256 && r>=0 && g<256 && g>=0 && b<256 && b>=0){
+    min = Math.min(r,g,b);
+    alpha = (255 - min) / 255;    
+    ra = Math.round((r - min) / alpha);
+    ga = Math.round((g - min) / alpha);
+    ba = Math.round((b - min) / alpha);
+    alpha = Math.round(alpha * 100) / 100; 
+    channel = 'rgba('+ra+','+ga+','+ba+','+alpha+')';
+    $(function(){ 
+      $('.appended').remove();
+      $('#original').css('background-color',original).append('<span class="appended" style="background:#FFF">'+original+'</span>');
+      $('#alphaChannel').css('background-color',channel).append('<span class="appended" style="background:#FFF">'+channel+'</span>');
+    });
+    }else{
+    alert('0-255までの数値で入力してください');
+    }
+}
+  </script>
+  <style>
+  body{
+    background: #FFF;
+  }
+  .box{
+    width:200px;
+    height:100px;
+    background-image:url(hoshi.png);
+    background-repeat:no-repeat;
+    background-position: center;
+  }
+  .inner{
+    width:100%;
+    height:100px;
+  }
+  </style>
+</head>
+<body>
+<h1>RGB to RGBA変換ツール</h1>
+<form name="Cvt">
+  Red:<br>
+  <input size="3" type="text" name="R" onBlur="check(this)"><br>
+  Green:<br>
+  <input size="3" type="text" name="G" onBlur="check(this)"><br>
+  Blue:<br>
+  <input size="3" type="text" name="B" onBlur="check(this)"><br>
+  <input type="button" value="Convert" onClick="RGBtoRGBA()">
+</form>
+<p>Original Color:</p>
+<div class="box"><div id="original" class="inner"></div></div>
+<div class="box"><div id="alphaChannel" class="inner"></div></div>
+<p>Alpha Channel:</p>
+</body></html>
+
+
+
